@@ -22,10 +22,15 @@ public class GenericRepository<T>(AppDbContext context) : IRepository<T>
         _set.Update(entity);
     }
 
-    public void Remove(T entity)
+    public async Task RemoveAsync(Guid id)
     {
+        var entity = await _set.FindAsync(id);
+        if (entity == null)
+            throw new Exception("Entity not found"); // todo
+
         _set.Remove(entity);
     }
+
 
     public IQueryable<T> Query()
     {

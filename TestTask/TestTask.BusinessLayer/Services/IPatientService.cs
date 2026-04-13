@@ -12,7 +12,7 @@ public interface IPatientService
 
     Task<List<Patient>> GetPatientsByDateParamsAsync(List<string> birthDateParameters);
 
-    Task UpdateAsync(Patient patient);
+    Task UpdateAsync(Guid id, Patient patient);
 
-    Task RemoveAsync(Patient patient);
+    Task RemoveAsync(Guid id);
 }

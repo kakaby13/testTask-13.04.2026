@@ -6,7 +6,7 @@ public interface IRepository<T> where T : class
     
     Task<T?> GetByIdAsync(Guid id);
     
-    void Remove(T entity);
+    Task RemoveAsync(Guid id);
     
     IQueryable<T> Query();
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mapster;
+using Microsoft.EntityFrameworkCore;
 using TestTask.DataLayer;
 using TestTask.DataLayer.DataModels;
 using TestTask.DataLayer.Repositories;
@@ -35,15 +36,23 @@ public class PatientService(
         return await query.ToListAsync();
     }
 
-    public async Task UpdateAsync(Patient patient)
+    public async Task UpdateAsync(Guid id, Patient patient)
     {
-        patientGenericRepository.Update(patient);
+        var existingEntity = await patientGenericRepository.GetByIdAsync(id);
+        if (existingEntity == null)
+        {
+            throw new Exception($"text placeholder"); // todo
+        }
+        
+        existingEntity.Adapt(patient);
+        
+        patientGenericRepository.Update(existingEntity);
         await context.SaveChangesAsync();
     }
 
-    public async Task RemoveAsync(Patient patient)
+    public async Task RemoveAsync(Guid id)
     {
-        patientGenericRepository.Remove(patient);
+        await patientGenericRepository.RemoveAsync(id);
         await context.SaveChangesAsync();
     }
 }
