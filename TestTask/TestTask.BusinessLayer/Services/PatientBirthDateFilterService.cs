@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using LinqKit;
+using TestTask.BusinessLayer.Exceptions;
 using TestTask.DataLayer.DataModels;
 
 namespace TestTask.BusinessLayer.Services;
@@ -21,30 +22,31 @@ public class PatientBirthDateFilterService : IPatientBirthDateFilterService
         return filter;
     }
 
-    private static Expression<Func<Patient, bool>> CreateFilterExpression(string dateParameter)
+    private static Expression<Func<Patient, bool>> CreateFilterExpression(string birthDateParameter)
     {
         var prefix = Prefixes.FirstOrDefault(p =>
-            dateParameter.StartsWith(p, StringComparison.OrdinalIgnoreCase));
+            birthDateParameter.StartsWith(p, StringComparison.OrdinalIgnoreCase));
 
         if (prefix == null)
         {
-            throw new ArgumentException($"text placeholder"); // todo
+            throw new UserFriendlyException("Datetime prefix incorrect");
         }
         
-        var dateString = dateParameter.Substring(prefix.Length);
+        var dateAsString = birthDateParameter.Substring(prefix.Length);
 
-        if (!DateTime.TryParse(dateString, out var date))
-            throw new ArgumentException($"text placeholder'");  // todo
+        if (!DateTime.TryParse(dateAsString, out var dateTime))
+            throw new UserFriendlyException($"DateTime format incorrect {dateAsString}");
         
         return prefix switch
         {
-            "eq" => p => p.BirthDate.Date == date.Date,
-            "ne" => p => p.BirthDate.Date != date.Date,
-            "gt" => p => p.BirthDate > date,
-            "lt" => p => p.BirthDate < date,
-            "ge" => p => p.BirthDate >= date,
-            "le" => p => p.BirthDate <= date,
-            _ => throw new ArgumentException($"text placeholder") // todo
+            "eq" => p => p.BirthDate.Date == dateTime.Date,
+            "ne" => p => p.BirthDate.Date != dateTime.Date,
+            "lt" => p => p.BirthDate < dateTime,
+            "gt" => p => p.BirthDate > dateTime,
+            "ge" => p => p.BirthDate >= dateTime,
+            "le" => p => p.BirthDate <= dateTime,
+            _ => throw new UserFriendlyException(
+                $"Datetime prefix:'{prefix}' not supported. sa, eb, ap not supported, rest - simplified")
         };
     }
 }

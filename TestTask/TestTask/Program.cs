@@ -4,38 +4,24 @@ using TestTask.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure DB
 builder.ConfigureDataBase();
-
-// Add DI configuration
 builder.Services
     .AddMapsterMappingProfiles()
     .AddBusinessServices()
-    .AddRepositories();
+    .AddRepositories()
+    .AddCorsConfiguration();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddControllers();
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.AddCustomMiddlewares();
+
+// Swagger allowed in production by technical requirements
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseCors();

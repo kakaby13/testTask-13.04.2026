@@ -1,4 +1,6 @@
-﻿namespace TestTask.BusinessLayer.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestTask.BusinessLayer.Dtos;
 
 public class PatientDto
 {
@@ -6,6 +8,7 @@ public class PatientDto
     
     public string Use { get; set; }
     
+    [Required]
     public string Family { get; set; }
     
     public string GivenName { get; set; }
@@ -14,6 +17,7 @@ public class PatientDto
     
     public string Gender { get; set; }
     
+    [Required]
     public DateTime BirthDate { get; set; }
     
     public string Active { get; set; }

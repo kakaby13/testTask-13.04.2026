@@ -26,7 +26,7 @@ public class GenericRepository<T>(AppDbContext context) : IRepository<T>
     {
         var entity = await _set.FindAsync(id);
         if (entity == null)
-            throw new Exception("Entity not found"); // todo
+            return;
 
         _set.Remove(entity);
     }

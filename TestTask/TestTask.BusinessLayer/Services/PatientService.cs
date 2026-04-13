@@ -2,6 +2,7 @@
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using TestTask.BusinessLayer.Dtos;
+using TestTask.BusinessLayer.Exceptions;
 using TestTask.DataLayer;
 using TestTask.DataLayer.DataModels;
 using TestTask.DataLayer.Repositories;
@@ -26,8 +27,12 @@ public class PatientService(
     public async Task<PatientDto?> GetByIdAsync(Guid id)
     {
         var patient = await patientGenericRepository.FindByIdAsync(id);
+        if (patient == null)
+        {
+            throw new UserFriendlyException($"Can't find entity by id: {id}");
+        }
         
-        return mapper.Map<PatientDto>(patient); // todo
+        return mapper.Map<PatientDto>(patient);
     }
 
     public async Task<List<PatientDto>> GetAllAsync()
@@ -52,8 +57,9 @@ public class PatientService(
         var existingEntity = await patientGenericRepository.FindByIdAsync(id);
         if (existingEntity == null)
         {
-            throw new Exception($"text placeholder"); // todo
+            throw new UserFriendlyException($"Can't find entity by id: {id}");
         }
+        
         var patient = mapper.Map<Patient>(patientDto);
         existingEntity.Adapt(patient);
         

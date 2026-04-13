@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TestTask.BusinessLayer.Dtos;
+using TestTask.BusinessLayer.Exceptions;
 using TestTask.BusinessLayer.Services;
 
 namespace TestTask.Controllers;
@@ -36,10 +36,10 @@ public class PatientController(IPatientService patientService) : ControllerBase
         
         if (birthDates == null || birthDates.Count == 0)
         {
-            throw  new ArgumentException("No birth date"); // todo
+            throw  new UserFriendlyException("Birth date parameters incorrect");
         }
 
-        return await patientService.GetPatientsByDateParamsAsync(birthDates);
+        return await patientService.GetPatientsByDateParamsAsync(birthDates!);
     } 
     
     [HttpPut("{id:guid}")]
