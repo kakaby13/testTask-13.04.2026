@@ -1,14 +1,20 @@
+using TestTask.DataLayer.Extensions;
+using TestTask.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configure DB
+builder.ConfigureDataBase();
+
+// Add DI configuration
+builder.Services.AddRepositories();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
