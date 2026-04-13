@@ -1,18 +1,19 @@
-﻿using TestTask.DataLayer.DataModels;
+﻿using TestTask.BusinessLayer.Dtos;
+using TestTask.DataLayer.DataModels;
 
 namespace TestTask.BusinessLayer.Services;
 
 public interface IPatientService
 {
-    Task CreateAsync(Patient patient);
+    Task CreateAsync(PatientDto patient);
 
-    Task<Patient?> GetByIdAsync(Guid id);
+    Task<PatientDto?> GetByIdAsync(Guid id);
 
-    Task<List<Patient>> GetAllAsync();
+    Task<List<PatientDto>> GetAllAsync();
 
-    Task<List<Patient>> GetPatientsByDateParamsAsync(List<string> birthDateParameters);
+    Task<List<PatientDto>> GetPatientsByDateParamsAsync(List<string> birthDateParameters);
 
-    Task UpdateAsync(Guid id, Patient patient);
+    Task UpdateAsync(Guid id, PatientDto patient);
 
     Task RemoveAsync(Guid id);
 }

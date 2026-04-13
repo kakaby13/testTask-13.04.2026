@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
+using TestTask.BusinessLayer.Dtos;
 using TestTask.BusinessLayer.Services;
-using TestTask.DataLayer.DataModels;
 
 namespace TestTask.Controllers;
 
@@ -9,37 +10,40 @@ namespace TestTask.Controllers;
 public class PatientController(IPatientService patientService) : ControllerBase
 {
     [HttpPost]
-    public async Task CreateAsync(Patient patient)
+    public async Task CreateAsync([FromBody] PatientDto patient)
     {
         await patientService.CreateAsync(patient);
     }
     
     [HttpGet("{id:guid}")]
-    public async Task<Patient?> GetById(Guid id)
+    public async Task<PatientDto?> GetById(Guid id)
     {
         return await patientService.GetByIdAsync(id);
     }
     
     [HttpGet]
-    public async Task<List<Patient>> GetAllAsync()
+    public async Task<List<PatientDto>> GetAllAsync()
     {
         return await patientService.GetAllAsync();
     }
 
     [HttpGet("by-birthdate")]
-    public async Task<List<Patient>> GetAllByBirthDateAsync()
+    public async Task<List<PatientDto>> GetAllByBirthDateAsync([FromQuery] string[] birthDateParameters)
     {
-        var parameters = Request.Query["BirthDate"].ToList();
-        if (parameters.Count == 0)
+        var birthDates = Request.Query["birthDate"]
+            .Select(v => v)
+            .ToList();
+        
+        if (birthDates == null || birthDates.Count == 0)
         {
             throw  new ArgumentException("No birth date"); // todo
         }
-        
-        return await patientService.GetPatientsByDateParamsAsync(parameters!);
+
+        return await patientService.GetPatientsByDateParamsAsync(birthDates);
     } 
     
     [HttpPut("{id:guid}")]
-    public async Task UpdateAsync(Guid id, [FromBody] Patient patient)
+    public async Task UpdateAsync(Guid id, [FromBody] PatientDto patient)
     {
         await patientService.UpdateAsync(id, patient);
     }

@@ -12,7 +12,7 @@ public class GenericRepository<T>(AppDbContext context) : IRepository<T>
         return _set.AddAsync(entity).AsTask();
     }
     
-    public Task<T?> GetByIdAsync(Guid id)
+    public Task<T?> FindByIdAsync(Guid id)
     {
         return _set.FindAsync(id).AsTask();
     }

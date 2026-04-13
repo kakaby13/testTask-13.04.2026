@@ -4,7 +4,7 @@ public interface IRepository<T> where T : class
 {
     Task AddAsync(T entity);
     
-    Task<T?> GetByIdAsync(Guid id);
+    Task<T?> FindByIdAsync(Guid id);
     
     Task RemoveAsync(Guid id);
     

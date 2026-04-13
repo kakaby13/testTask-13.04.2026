@@ -10,10 +10,15 @@ public class PatientBirthDateFilterService : IPatientBirthDateFilterService
 
     public Expression<Func<Patient, bool>> CreateFilterExpression(List<string> birthDateParameters)
     {
-        return birthDateParameters
-            .Select(CreateFilterExpression)
-            .Aggregate<Expression<Func<Patient, bool>>?, Expression<Func<Patient, bool>>>(null!,
-                (current, filter) => current.And(filter));
+        var filter = PredicateBuilder.New<Patient>(true);
+
+        foreach (var birthDate in birthDateParameters)
+        {
+            var newFilter = CreateFilterExpression(birthDate);
+            filter = filter.And(newFilter);
+        }
+
+        return filter;
     }
 
     private static Expression<Func<Patient, bool>> CreateFilterExpression(string dateParameter)
