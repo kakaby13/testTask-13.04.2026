@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TestTask.BusinessLayer\TestTask.BusinessLayer.csproj" />
       <ProjectReference Include="..\TestTask.DataLayer\TestTask.DataLayer.csproj" />
     </ItemGroup>
 

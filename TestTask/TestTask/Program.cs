@@ -1,3 +1,4 @@
+using TestTask.BusinessLayer.Extensions;
 using TestTask.DataLayer.Extensions;
 using TestTask.Extensions;
 
@@ -7,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureDataBase();
 
 // Add DI configuration
-builder.Services.AddRepositories();
+builder.Services
+    .AddBusinessServices()
+    .AddRepositories();
 
 builder.Services.AddControllers();
 
