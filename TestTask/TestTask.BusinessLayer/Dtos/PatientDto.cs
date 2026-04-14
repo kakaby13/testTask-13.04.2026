@@ -4,16 +4,7 @@ namespace TestTask.BusinessLayer.Dtos;
 
 public class PatientDto
 {
-    public Guid Id { get; set; }
-    
-    public string Use { get; set; }
-    
-    [Required]
-    public string Family { get; set; }
-    
-    public string GivenName { get; set; }
-    
-    public string Surname { get; set; }
+    public NameDto Name { get; set; }
     
     public string Gender { get; set; }
     

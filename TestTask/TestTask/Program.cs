@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureDataBase();
 builder.Services
+    .ConfigureFluentValidation()
     .AddMapsterMappingProfiles()
     .AddBusinessServices()
     .AddRepositories()
