@@ -21,6 +21,7 @@ var app = builder.Build();
 
 app
     .AddCustomMiddlewares()
+    .ApplyMigrations() // Apply migration only for easy test setup, not for production us
     .AddSwagger(); // Swagger allowed in production by technical requirements
 
 app.UseHttpsRedirection();

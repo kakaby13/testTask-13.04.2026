@@ -17,6 +17,9 @@
 *.sln.docstates
 *.env
 
+# File .env allowed only for test purpose! Not for real case!
+!.env
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
