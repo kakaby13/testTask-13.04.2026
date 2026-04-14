@@ -16,7 +16,7 @@ public static class BusinessLayerExtensions
         return services;
     }
 
-    public static IServiceCollection AddMapsterMappingProfiles(this IServiceCollection services)
+    public static IServiceCollection AddMapsterConfig(this IServiceCollection services)
     {
         var config = TypeAdapterConfig.GlobalSettings;
 

@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.ConfigureDataBase();
 builder.Services
     .ConfigureFluentValidation()
-    .AddMapsterMappingProfiles()
+    .AddMapsterConfig()
+    .AddApiMapsterConfig()
     .AddBusinessServices()
     .AddRepositories()
     .AddCorsConfiguration();
@@ -18,17 +19,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.AddCustomMiddlewares();
-
-// Swagger allowed in production by technical requirements
-app.UseSwagger();
-app.UseSwaggerUI();
+app
+    .AddCustomMiddlewares()
+    .AddSwagger(); // Swagger allowed in production by technical requirements
 
 app.UseHttpsRedirection();
 app.UseCors();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

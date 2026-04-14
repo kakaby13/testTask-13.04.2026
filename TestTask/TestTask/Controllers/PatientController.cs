@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MapsterMapper;
+using Microsoft.AspNetCore.Mvc;
 using TestTask.BusinessLayer.Dtos;
-using TestTask.BusinessLayer.Exceptions;
+using TestTask.BusinessLayer.QueryParameters;
 using TestTask.BusinessLayer.Services;
+using TestTask.Filters;
 
 namespace TestTask.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PatientController(IPatientService patientService) : ControllerBase
+public class PatientController(
+    IPatientService patientService,
+    IMapper mapper) 
+    : ControllerBase
 {
     [HttpPost]
     public async Task CreateAsync([FromBody] PatientDto patient)
@@ -22,25 +27,12 @@ public class PatientController(IPatientService patientService) : ControllerBase
     }
     
     [HttpGet]
-    public async Task<List<PatientDto>> GetAllAsync()
+    public async Task<List<PatientDto>> GetAsync([FromQuery] PatientFilter filter)
     {
-        return await patientService.GetAllAsync();
-    }
-
-    [HttpGet("by-birthdate")]
-    public async Task<List<PatientDto>> GetAllByBirthDateAsync([FromQuery] string[] birthDateParameters)
-    {
-        var birthDates = Request.Query["birthDate"]
-            .Select(v => v)
-            .ToList();
+        var query = mapper.Map<PatientQuery>(filter);
         
-        if (birthDates == null || birthDates.Count == 0)
-        {
-            throw  new UserFriendlyException("Birth date parameters incorrect");
-        }
-
-        return await patientService.GetPatientsByDateParamsAsync(birthDates!);
-    } 
+        return await patientService.GetByQueryAsync(query);
+    }
     
     [HttpPut("{id:guid}")]
     public async Task UpdateAsync(Guid id, [FromBody] PatientDto patient)

@@ -1,6 +1,6 @@
 ﻿namespace TestTask.Extensions;
 
-public static class CorsExtensions
+public static class StartupConfigExtensions
 {
     public static IServiceCollection AddCorsConfiguration(this IServiceCollection services)
     {
@@ -16,5 +16,14 @@ public static class CorsExtensions
         });
 
         return services;
+    }
+    
+    public static WebApplication AddSwagger(this WebApplication app)
+    {
+        app
+            .UseSwagger()
+            .UseSwaggerUI();
+        
+        return app;
     }
 }

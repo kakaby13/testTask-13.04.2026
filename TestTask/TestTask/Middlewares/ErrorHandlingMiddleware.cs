@@ -20,14 +20,13 @@ public class ErrorHandlingMiddleware(RequestDelegate next)
     {
         context.Response.ContentType = "application/json";
 
-        if (exception is UserFriendlyException userFriendlyException)
+        context.Response.StatusCode = exception is UserFriendlyException
+            ? StatusCodes.Status400BadRequest
+            : StatusCodes.Status500InternalServerError;
+        
+        await context.Response.WriteAsJsonAsync(new
         {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-
-            await context.Response.WriteAsJsonAsync(new
-            {
-                message = userFriendlyException.Message,
-            });
-        }
+            message = exception.Message,
+        });
     }
 }

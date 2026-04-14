@@ -7,7 +7,7 @@ public static class RepositoryExtensions
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient<PatientGenericRepository>();
+        services.AddTransient<PatientRepository>();
         
         return services;
     }

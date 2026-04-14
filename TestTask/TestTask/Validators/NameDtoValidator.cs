@@ -14,7 +14,7 @@ public class NameDtoValidator : AbstractValidator<NameDto>
         RuleFor(x => x.Given)
             .NotNull()
             .WithMessage("Given must be provided")
-            .Must(g => g.Length == 0)
+            .Must(g => g.Length > 0)
             .WithMessage("Given must contain at least one element")
             .Must(g => g.Length <= 3)
             .WithMessage("Given must contain no more than 3 elements")

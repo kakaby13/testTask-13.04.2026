@@ -6,7 +6,7 @@ public class NameDto
 {
     public Guid Id { get; set; }
     
-    public string Use { get; set; }
+    public string? Use { get; set; }
     
     [Required]
     public string Family { get; set; }

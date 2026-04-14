@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using TestTask.BusinessLayer.Dtos;
 using TestTask.BusinessLayer.Exceptions;
+using TestTask.BusinessLayer.QueryParameters;
 using TestTask.DataLayer;
 using TestTask.DataLayer.DataModels;
 using TestTask.DataLayer.Repositories;
@@ -11,7 +12,7 @@ namespace TestTask.BusinessLayer.Services;
 
 public class PatientService(
     IMapper mapper,
-    PatientGenericRepository patientGenericRepository,
+    PatientRepository patientRepository,
     IPatientBirthDateFilterService patientBirthDateFilterService,
     AppDbContext context)
     : IPatientService
@@ -20,13 +21,13 @@ public class PatientService(
     {
         var patient = mapper.Map<Patient>(patientDto);
         
-        await patientGenericRepository.AddAsync(patient);
+        await patientRepository.AddAsync(patient);
         await context.SaveChangesAsync();
     }
 
     public async Task<PatientDto?> GetByIdAsync(Guid id)
     {
-        var patient = await patientGenericRepository.FindByIdAsync(id);
+        var patient = await patientRepository.FindByIdAsync(id);
         if (patient == null)
         {
             throw new UserFriendlyException($"Can't find entity by id: {id}");
@@ -35,18 +36,21 @@ public class PatientService(
         return mapper.Map<PatientDto>(patient);
     }
 
-    public async Task<List<PatientDto>> GetAllAsync()
+    public async Task<List<PatientDto>> GetByQueryAsync(PatientQuery queryParams)
     {
-        var patients = await patientGenericRepository.Query().ToListAsync();
+        var query = patientRepository.Query();
         
-        return mapper.Map<List<PatientDto>>(patients);
-    }
-    
-    public async Task<List<PatientDto>> GetPatientsByDateParamsAsync(List<string> birthDateParameters)
-    {
-        var filter = patientBirthDateFilterService.CreateFilterExpression(birthDateParameters);
-        var query = patientGenericRepository.Query().Where(filter);
+        if (queryParams.BirthDates?.Any() == true)
+        {
+            var filter = patientBirthDateFilterService.CreateFilterExpression(queryParams.BirthDates);
+            query = query.Where(filter);
+        }
 
+        if (!string.IsNullOrWhiteSpace(queryParams.Family))
+        {
+            query = query.Where(patient => patient.Family.Contains(queryParams.Family));
+        }
+        
         var patients = await query.ToListAsync();
         
         return mapper.Map<List<PatientDto>>(patients);
@@ -54,7 +58,7 @@ public class PatientService(
 
     public async Task UpdateAsync(Guid id, PatientDto patientDto)
     {
-        var existingEntity = await patientGenericRepository.FindByIdAsync(id);
+        var existingEntity = await patientRepository.FindByIdAsync(id);
         if (existingEntity == null)
         {
             throw new UserFriendlyException($"Can't find entity by id: {id}");
@@ -63,13 +67,13 @@ public class PatientService(
         var patient = mapper.Map<Patient>(patientDto);
         existingEntity.Adapt(patient);
         
-        patientGenericRepository.Update(existingEntity);
+        patientRepository.Update(existingEntity);
         await context.SaveChangesAsync();
     }
 
     public async Task RemoveAsync(Guid id)
     {
-        await patientGenericRepository.RemoveAsync(id);
+        await patientRepository.RemoveAsync(id);
         await context.SaveChangesAsync();
     }
 }
