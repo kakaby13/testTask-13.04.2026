@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.DataLayer", "TestT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.BusinessLayer", "TestTask.BusinessLayer\TestTask.BusinessLayer.csproj", "{2E970C43-FCAF-4165-9B5D-533091E346A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.Core", "TestTask.Core\TestTask.Core.csproj", "{2873E62F-8AC6-490C-8257-D373B4710F43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTask.Core.Tests", "TestTask.Core.Tests\TestTask.Core.Tests.csproj", "{EFEE7906-8069-4EB1-9397-F1DBB20BA2CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{2E970C43-FCAF-4165-9B5D-533091E346A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E970C43-FCAF-4165-9B5D-533091E346A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E970C43-FCAF-4165-9B5D-533091E346A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2873E62F-8AC6-490C-8257-D373B4710F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2873E62F-8AC6-490C-8257-D373B4710F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2873E62F-8AC6-490C-8257-D373B4710F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2873E62F-8AC6-490C-8257-D373B4710F43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEE7906-8069-4EB1-9397-F1DBB20BA2CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEE7906-8069-4EB1-9397-F1DBB20BA2CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEE7906-8069-4EB1-9397-F1DBB20BA2CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEE7906-8069-4EB1-9397-F1DBB20BA2CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

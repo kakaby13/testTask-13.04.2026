@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using LinqKit;
 using TestTask.BusinessLayer.Exceptions;
+using TestTask.Core.FhirRangeParsers;
 using TestTask.DataLayer.DataModels;
 
 namespace TestTask.BusinessLayer.Services;
@@ -34,19 +35,26 @@ public class PatientBirthDateFilterService : IPatientBirthDateFilterService
         
         var dateAsString = birthDateParameter.Substring(prefix.Length);
 
-        if (!DateTime.TryParse(dateAsString, out var dateTime))
+        if (!DateTime.TryParse(dateAsString, out _))
+        {
             throw new UserFriendlyException($"DateTime format incorrect {dateAsString}");
+        }
+
+        var start = dateAsString.GetStartRange();
+        var end = dateAsString.GetEndRange();
         
         return prefix switch
         {
-            "eq" => p => p.BirthDate.Date == dateTime.Date,
-            "ne" => p => p.BirthDate.Date != dateTime.Date,
-            "lt" => p => p.BirthDate < dateTime,
-            "gt" => p => p.BirthDate > dateTime,
-            "ge" => p => p.BirthDate >= dateTime,
-            "le" => p => p.BirthDate <= dateTime,
-            _ => throw new UserFriendlyException(
-                $"Datetime prefix:'{prefix}' not supported. sa, eb, ap not supported, rest - simplified")
+            "eq" => p => p.BirthDate >= start && p.BirthDate <= end,
+            "ne" => p => p.BirthDate < start || p.BirthDate > end,
+            "gt" => p => p.BirthDate > end,
+            "lt" => p => p.BirthDate < start,
+            "ge" => p => p.BirthDate >= start,
+            "le" => p => p.BirthDate <= end,
+            "sa" => p => p.BirthDate > end,
+            "eb" => p => p.BirthDate < start,
+            "ap" => p => p.BirthDate >= start && p.BirthDate <= end,
+            _ => p => p.BirthDate >= start && p.BirthDate <= end // todo update to real approximately 
         };
     }
 }
