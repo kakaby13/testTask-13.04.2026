@@ -18,5 +18,5 @@ public class Patient
     
     public DateTime BirthDate { get; set; }
     
-    public Active Active { get; set; }
+    public bool Active { get; set; }
 }

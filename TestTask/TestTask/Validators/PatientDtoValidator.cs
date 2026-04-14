@@ -11,10 +11,6 @@ public class PatientDtoValidator : AbstractValidator<PatientDto>
         RuleFor(x => x.Name)
             .NotNull()
             .SetValidator(new NameDtoValidator());
-
-        RuleFor(x => x.Active)
-            .Must(g => string.IsNullOrEmpty(g) || Enum.TryParse<Active>(g, out _))
-            .WithMessage("Active must be one of: True, False");
         
         RuleFor(x => x.Gender)
             .Must(g => string.IsNullOrEmpty(g) || Enum.TryParse<Gender>(g, out _))

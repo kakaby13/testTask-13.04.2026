@@ -5,5 +5,5 @@ namespace TestTask.DataLayer;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public DbSet<Patient> Persons { get; set; }
+    public DbSet<Patient> Patients { get; set; }
 }

@@ -19,8 +19,7 @@ public class PatientMapping : IRegister
             .Map(dest => dest.Surname, src => src.Name.Given != null && src.Name.Given.Length > 2 
                 ? src.Name.Given[2] 
                 : null)
-            .Map(dest => dest.Gender, src => Enum.Parse<Gender>(src.Gender))
-            .Map(dest => dest.Active, src => Enum.Parse<Active>(src.Active));
+            .Map(dest => dest.Gender, src => Enum.Parse<Gender>(src.Gender));
 
         config.NewConfig<Patient, PatientDto>()
             .Map(dest => dest.Name, src => new NameDto

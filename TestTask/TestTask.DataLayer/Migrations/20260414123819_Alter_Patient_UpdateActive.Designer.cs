@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestTask.DataLayer;
 
@@ -11,9 +12,11 @@ using TestTask.DataLayer;
 namespace TestTask.DataLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260414123819_Alter_Patient_UpdateActive")]
+    partial class Alter_Patient_UpdateActive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace TestTask.DataLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Persons");
                 });
 #pragma warning restore 612, 618
         }
