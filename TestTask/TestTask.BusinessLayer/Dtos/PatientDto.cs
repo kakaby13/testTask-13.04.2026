@@ -11,5 +11,5 @@ public class PatientDto
     [Required]
     public DateTime BirthDate { get; set; }
     
-    public string? Active { get; set; }
+    public bool? Active { get; set; }
 }
