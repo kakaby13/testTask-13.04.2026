@@ -1,0 +1,273 @@
+{
+  "info": {
+    "_postman_id": "a95f33e1-4b56-4a00-8ec7-b45b6aeac879",
+    "name": "TestTack_13.04.2026",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "760474"
+  },
+  "item": [
+    {
+      "name": "Create test patient",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": {\r\n    \"use\": \"test\",\r\n    \"family\": \"TestFamily\",\r\n    \"given\": [\r\n      \"TestFamily\"\r\n    ]\r\n  },\r\n  \"gender\": \"Male\",\r\n  \"birthDate\": \"2026-04-15\",\r\n  \"active\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all patients",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient/:patientId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient",
+            ":patientId"
+          ],
+          "variable": [
+            {
+              "key": "patientId",
+              "value": "456cab4a-f7cf-4e57-b476-08de9aef57d9"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get by family",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient?Family=TestFamily",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient"
+          ],
+          "query": [
+            {
+              "key": "Family",
+              "value": "TestFamily"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get by date range",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient?BirthDates=eq2026-04-15&BirthDates=ne2001-01-14T10:00Z&BirthDates=gt2007-01-14&BirthDates=lt2027-01-14&BirthDates=ge2007-01-14&BirthDates=le2027-01-14&BirthDates=sa2003-01-14T10:00:00%2B02:00&BirthDates=eb2029-04-15T12:02:12Z",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient"
+          ],
+          "query": [
+            {
+              "key": "BirthDates",
+              "value": "eq2026-04-15"
+            },
+            {
+              "key": "BirthDates",
+              "value": "ne2001-01-14T10:00Z"
+            },
+            {
+              "key": "BirthDates",
+              "value": "gt2007-01-14"
+            },
+            {
+              "key": "BirthDates",
+              "value": "lt2027-01-14"
+            },
+            {
+              "key": "BirthDates",
+              "value": "ge2007-01-14"
+            },
+            {
+              "key": "BirthDates",
+              "value": "le2027-01-14"
+            },
+            {
+              "key": "BirthDates",
+              "value": "sa2003-01-14T10:00:00%2B02:00"
+            },
+            {
+              "key": "BirthDates",
+              "value": "eb2029-04-15T12:02:12Z"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get by few params",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient?Family=TestFamily&BirthDates=eq2026-04-15",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient"
+          ],
+          "query": [
+            {
+              "key": "Family",
+              "value": "TestFamily"
+            },
+            {
+              "key": "BirthDates",
+              "value": "eq2026-04-15"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete entity",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient/:patientId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient",
+            ":patientId"
+          ],
+          "variable": [
+            {
+              "key": "patientId",
+              "value": "409373e4-dbc5-4830-6bbb-08de9ae7813f"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update entity",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": {\r\n        \"use\": \"test\",\r\n        \"family\": \"TestFamily\",\r\n        \"given\": [\r\n            \"TestFamily\"\r\n        ]\r\n    },\r\n    \"gender\": \"Male\",\r\n    \"birthDate\": \"2026-04-15\",\r\n    \"active\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/Patient/:patientId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "Patient",
+            ":patientId"
+          ],
+          "variable": [
+            {
+              "key": "patientId",
+              "value": "409373e4-dbc5-4830-6bbb-08de9ae7813f"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}
